@@ -13,12 +13,12 @@ from nets import get_model_from_name
 if __name__ == "__main__":
 
     # 训练模型路径
-    modelPath = "./logs/ep009-loss0.100-val_loss0.006.pth"
+    modelPath = "./logs/ep047-loss0.141-val_loss0.014.pth"
     # 输出模型路径
     savePath = "model_data/best-class.onnx"
 
     # 类别数量
-    num_classes=4
+    num_classes=5
 
     # 图片参数
     imageChannel=3
