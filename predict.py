@@ -11,6 +11,8 @@ classfication = Classification()
 
 while True:
     img = input('Input image filename:')
+    if img == "exit":
+        break
     try:
         image = Image.open(img)
     except:

@@ -13,7 +13,7 @@ from nets import get_model_from_name
 if __name__ == "__main__":
 
     # 训练模型路径
-    modelPath = "./logs/ep047-loss0.141-val_loss0.014.pth"
+    modelPath = "./logs/ep016-loss0.454-val_loss0.144.pth"
     # 输出模型路径
     savePath = "model_data/best-class.onnx"
 
