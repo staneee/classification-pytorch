@@ -13,7 +13,7 @@ from nets import get_model_from_name
 if __name__ == "__main__":
 
     # 训练模型路径
-    modelPath = "./logs/ep016-loss0.454-val_loss0.144.pth"
+    modelPath = "./logs/ep099-loss0.076-val_loss0.003.pth"
     # 输出模型路径
     savePath = "model_data/best-class.onnx"
 
@@ -32,9 +32,9 @@ if __name__ == "__main__":
     backbone='resnet50'
     model=''
     if backbone != "vit":
-        model  = get_model_from_name[backbone](num_classes = num_classes, pretrained = False)
+        model  = get_model_from_name[backbone](num_classes = num_classes, pretrained = True)
     else:
-        model  = get_model_from_name[backbone](input_shape = input_shape, num_classes = num_classes, pretrained = False)
+        model  = get_model_from_name[backbone](input_shape = input_shape, num_classes = num_classes, pretrained = True)
 
     model.load_state_dict(torch.load(modelPath, map_location=device))
     # 生产模型

@@ -19,7 +19,7 @@ class Classification(object):
         #   model_path指向logs文件夹下的权值文件，classes_path指向model_data下的txt
         #   如果出现shape不匹配，同时要注意训练时的model_path和classes_path参数的修改
         #--------------------------------------------------------------------------#
-        "model_path"        : 'model_data/mobilenet_catvsdog.pth',
+        "model_path"        : 'logs/ep099-loss0.076-val_loss0.003.pth',
         "classes_path"      : 'model_data/cls_classes.txt',
         #--------------------------------------------------------------------#
         #   输入的图片大小
@@ -29,7 +29,7 @@ class Classification(object):
         #   所用模型种类：
         #   mobilenet、resnet50、vgg16、vit
         #--------------------------------------------------------------------#
-        "backbone"          : 'mobilenet',
+        "backbone"          : 'resnet50',
         #--------------------------------------------------------------------#
         #   该变量用于控制是否使用letterbox_image对输入图像进行不失真的resize
         #   否则对图像进行CenterCrop
@@ -39,7 +39,7 @@ class Classification(object):
         #   是否使用Cuda
         #   没有GPU可以设置成False
         #-------------------------------#
-        "cuda"              : True
+        "cuda"              : False
     }
 
     @classmethod
@@ -99,7 +99,10 @@ class Classification(object):
         #---------------------------------------------------------#
         #   归一化+添加上batch_size维度+转置
         #---------------------------------------------------------#
-        image_data  = np.transpose(np.expand_dims(preprocess_input(np.array(image_data, np.float32)), 0), (0, 3, 1, 2))
+        a1 = np.array(image_data, np.float32)
+        a2 = preprocess_input(a1)
+        a3 = np.expand_dims(a2, 0)
+        image_data = np.transpose(a3, (0, 3, 1, 2))
 
         with torch.no_grad():
             photo   = torch.from_numpy(image_data)
@@ -108,12 +111,17 @@ class Classification(object):
             #---------------------------------------------------#
             #   图片传入网络进行预测
             #---------------------------------------------------#
-            preds   = torch.softmax(self.model(photo)[0], dim=-1).cpu().numpy()
+            r1=self.model(photo)[0]
+            r2=torch.softmax(r1, dim=-1)
+            preds   = r2.cpu().numpy()
         #---------------------------------------------------#
         #   获得所属种类
         #---------------------------------------------------#
         class_name  = self.class_names[np.argmax(preds)]
         probability = np.max(preds)
+        print(preds)
+        print(probability)
+        print(class_name)
 
         #---------------------------------------------------#
         #   绘图并写字

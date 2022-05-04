@@ -20,4 +20,4 @@ while True:
         continue
     else:
         class_name = classfication.detect_image(image)
-        print(class_name)
+        # print(class_name)
